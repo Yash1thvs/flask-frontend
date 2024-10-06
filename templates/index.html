@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Clients</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
+    <p>{{clients}}</p>
+    <h1>Client List</h1>
+    <ul>
+        {% for client in clients %}
+            <li>
+                <a href="{{ url_for('client_cost', client_id=client['id']) }}">{{ client['title'] }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
