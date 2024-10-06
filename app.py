@@ -33,7 +33,8 @@ def client_cost(client_id):
         response.raise_for_status()
         cost_details = response.json()  # Parse the response as JSON
     except requests.exceptions.RequestException as e:
-        return render_template('error.html', message=f"Error fetching client cost details: {e}")
+        return render_template('error.html', message=f"Error fetching client cost details, No available data for the "
+                                                     f"current month-{month}: {e}")
 
     if not cost_details:
         return render_template('error.html', message="No cost details found for this client and month.")
