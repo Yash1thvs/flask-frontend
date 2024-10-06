@@ -20,17 +20,28 @@ def index():
 
 
 # Route to display cost details of a client for a particular month
+from datetime import datetime
+import requests
+
+
 @app.route('/client/<client_id>/cost', methods=['GET', 'POST'])
 def client_cost(client_id):
-    month = request.form.get('month') if request.method == 'POST' else 10  # Default to October if no month selected
+    # Get the current month if no POST request is made
+    current_month = datetime.now().month
+    month = request.form.get('month', current_month)  # Default to the current month
+
+    cost_details = None
     try:
         response = requests.get(f"{FASTAPI_BASE_URL}/clients/{client_id}/cost", params={'month': month})
         response.raise_for_status()
-        cost_details = response.json()
+        cost_details = response.json()  # Parse the response as JSON
     except requests.exceptions.RequestException as e:
-        cost_details = None
-        print(f"Error fetching client cost details: {e}")
-    return render_template('client_cost.html', cost_details=cost_details, month=month)
+        return render_template('error.html', message=f"Error fetching client cost details: {e}")
+
+    if not cost_details:
+        return render_template('error.html', message="No cost details found for this client and month.")
+
+    return render_template('client_cost.html', cost_details=cost_details, month=int(month))
 
 
 # Route to display cost details of a specific user within a client
@@ -45,7 +56,6 @@ def user_cost(client_id, user_email):
         user_cost_details = None
         print(f"Error fetching user cost details: {e}")
     return render_template('user_cost.html', user_cost_details=user_cost_details, month=month)
-
 
 
 if __name__ == '__main__':

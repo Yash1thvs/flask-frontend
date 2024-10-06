@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Cost Details for Client: {{ cost_details.client.title }}</h1>
+    <h1>Cost Details for Client: {{ cost_details.client.title() }}</h1>
 
     <form method="POST">
         <label for="month">Select Month:</label>
