@@ -34,8 +34,12 @@
     <ul>
         {% for task in cost_details.tasks %}
             <li>
-                <a href="{{ url_for('user_cost', client_id=cost_details.client.id, user_email='user@example.com') }}">View Cost for User</a>
+                Task: {{ task.task_name }} (Category: {{ task.category }})<br>
+                Messages: {{ task.message_count }}<br>
+                Total Cost: {{ task.total_cost }}<br>
+                User Email: {{ task.user_email }}
             </li>
+        <br>
         {% endfor %}
     </ul>
 

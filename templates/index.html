@@ -10,7 +10,7 @@
     <ul>
         {% for client in clients %}
             <li>
-                <a href="{{ url_for('client_cost', client_id=client['id']) }}">{{ client['title'] }}</a>
+                <p><a href="{{ url_for('client_cost', client_id=client['id']) }}">{{ client['title'] }}</a></p>
             </li>
         {% endfor %}
     </ul>
